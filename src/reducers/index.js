@@ -1,11 +1,16 @@
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
 import * as THREE from 'three';
 
+import worldMap from '../map';
+import { mapRegionToTile } from '../helpers';
+
 const initialState = Map({
-    cameraPosition: new THREE.Vector3(0, 0, 5),
+    cameraPosition: new THREE.Vector3(0, 100, 75),
+    cameraLookAt: new THREE.Vector3(),
     cubeRotation: new THREE.Euler(),
-    lightPosition: new THREE.Vector3(0, 0, 200),
-    lightLookAt: new THREE.Vector3(0, 0, 0)
+    lightPosition: new THREE.Vector3(100, 100, 200),
+    lightLookAt: new THREE.Vector3(0, 0, 0),
+    world: List(worldMap.map(region => mapRegionToTile(region)))
 });
 
 const rootReducer = (state = initialState, action) => {
