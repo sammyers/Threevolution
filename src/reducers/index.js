@@ -8,7 +8,7 @@ const initialState = Map({
     cameraPosition: new THREE.Vector3(0, 100, 75),
     cameraLookAt: new THREE.Vector3(),
     cubeRotation: new THREE.Euler(),
-    lightPosition: new THREE.Vector3(100, 100, 200),
+    lightPosition: new THREE.Vector3(200, 500, 200),
     lightLookAt: new THREE.Vector3(0, 0, 0),
     world: List(worldMap.map(region => mapRegionToTile(region)))
 });

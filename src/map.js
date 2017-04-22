@@ -1,11 +1,12 @@
 export default [
     {
         corner: {
-            x: 30.0,
+            x: -75.0,
             y: 50.0
         },
         width: 20.0,
-        height: 15.0
+        height: 15.0,
+        type: 'water'
     },
     {
         corner: {
@@ -13,7 +14,8 @@ export default [
             y: 50.0
         },
         width: 25.0,
-        height: 30.0
+        height: 30.0,
+        type: 'coast'
     },
     {
         corner: {
@@ -21,7 +23,8 @@ export default [
             y: 50.0
         },
         width: 10.0,
-        height: 20.0
+        height: 20.0,
+        type: 'swamp'
     },
     {
         corner: {
@@ -29,7 +32,8 @@ export default [
             y: 50.0
         },
         width: 30.0,
-        height: 15.0
+        height: 15.0,
+        type: 'forest'
     },
     {
         corner: {
@@ -37,7 +41,17 @@ export default [
             y: 50.0
         },
         width: 20.0,
-        height: 25.0
+        height: 25.0,
+        type: 'plains'
+    },
+    {
+        corner: {
+            x: 30.0,
+            y: 50.0
+        },
+        width: 20.0,
+        height: 15.0,
+        type: 'coast'
     },
     {
         corner: {
@@ -45,15 +59,8 @@ export default [
             y: 50.0
         },
         width: 25.0,
-        height: 35.0
-    },
-    {
-        corner: {
-            x: -75.0,
-            y: 50.0
-        },
-        width: 20.0,
-        height: 15.0
+        height: 35.0,
+        type: 'water'
     },
 
     {
@@ -62,7 +69,8 @@ export default [
             y: 35.0
         },
         width: 20.0,
-        height: 15.0
+        height: 15.0,
+        type: 'coast'
     },
     {
         corner: {
@@ -70,7 +78,8 @@ export default [
             y: 20.0
         },
         width: 50.0,
-        height: 5.0
+        height: 5.0,
+        type: 'forest'
     },
     {
         corner: {
@@ -78,7 +87,8 @@ export default [
             y: 30.0
         },
         width: 10.0,
-        height: 10.0
+        height: 10.0,
+        type: 'plains'
     },
     {
         corner: {
@@ -86,7 +96,8 @@ export default [
             y: 35.0
         },
         width: 15.0,
-        height: 15.0
+        height: 15.0,
+        type: 'mountains'
     },
     {
         corner: {
@@ -94,7 +105,8 @@ export default [
             y: 35.0
         },
         width: 15.0,
-        height: 25.0
+        height: 25.0,
+        type: 'swamp'
     },
     {
         corner: {
@@ -102,7 +114,8 @@ export default [
             y: 25.0
         },
         width: 15.0,
-        height: 20.0
+        height: 20.0,
+        type: 'forest'
     },
     {
         corner: {
@@ -110,7 +123,8 @@ export default [
             y: 25.0
         },
         width: 5.0,
-        height: 40.0
+        height: 40.0,
+        type: 'mountains'
     },
     {
         corner: {
@@ -118,7 +132,8 @@ export default [
             y: 35.0
         },
         width: 20.0,
-        height: 35.0
+        height: 35.0,
+        type: 'coast'
     },
     {
         corner: {
@@ -126,7 +141,8 @@ export default [
             y: 15.0
         },
         width: 15.0,
-        height: 25.0
+        height: 25.0,
+        type: 'coast'
     },
     {
         corner: {
@@ -134,7 +150,8 @@ export default [
             y: 15.0
         },
         width: 10.0,
-        height: 35.0
+        height: 35.0,
+        type: 'water'
     },
 
     {
@@ -143,7 +160,8 @@ export default [
             y: 20.0
         },
         width: 10.0,
-        height: 30.0
+        height: 30.0,
+        type: 'coast'
     },
     {
         corner: {
@@ -151,7 +169,8 @@ export default [
             y: 20.0
         },
         width: 10.0,
-        height: 10.0
+        height: 10.0,
+        type: 'swamp'
     },
     {
         corner: {
@@ -159,7 +178,8 @@ export default [
             y: 15.0
         },
         width: 25.0,
-        height: 25.0
+        height: 25.0,
+        type: 'plains'
     },
     {
         corner: {
@@ -167,7 +187,8 @@ export default [
             y: 15.0
         },
         width: 25.0,
-        height: 15.0
+        height: 15.0,
+        type: 'mountains'
     },
     {
         corner: {
@@ -175,7 +196,8 @@ export default [
             y: 10.0
         },
         width: 15.0,
-        height: 5.0
+        height: 5.0,
+        type: 'plains'
     },
     {
         corner: {
@@ -183,7 +205,8 @@ export default [
             y: 5.0
         },
         width: 30.0,
-        height: 10.0
+        height: 10.0,
+        type: 'swamp'
     },
     {
         corner: {
@@ -191,7 +214,8 @@ export default [
             y: -5.0
         },
         width: 15.0,
-        height: 10.0
+        height: 10.0,
+        type: 'plains'
     },
     {
         corner: {
@@ -199,7 +223,8 @@ export default [
             y: -15.0
         },
         width: 30.0,
-        height: 25.0
+        height: 25.0,
+        type: 'forest'
     },
     {
         corner: {
@@ -207,7 +232,8 @@ export default [
             y: 0.0
         },
         width: 10.0,
-        height: 15.0
+        height: 15.0,
+        type: 'swamp'
     },
     {
         corner: {
@@ -215,7 +241,8 @@ export default [
             y: 0.0
         },
         width: 10.0,
-        height: 10.0
+        height: 10.0,
+        type: 'forest'
     },
     {
         corner: {
@@ -223,7 +250,8 @@ export default [
             y: -10.0
         },
         width: 25.0,
-        height: 10.0
+        height: 10.0,
+        type: 'coast'
     },
     {
         corner: {
@@ -231,7 +259,8 @@ export default [
             y: -20.0
         },
         width: 25.0,
-        height: 20.0
+        height: 20.0,
+        type: 'coast'
     },
 
     {
@@ -240,7 +269,8 @@ export default [
             y: -10.0
         },
         width: 15.0,
-        height: 25.0
+        height: 25.0,
+        type: 'water'
     },
     {
         corner: {
@@ -248,7 +278,8 @@ export default [
             y: 10.0
         },
         width: 5.0,
-        height: 20.0
+        height: 20.0,
+        type: 'coast'
     },
     {
         corner: {
@@ -256,7 +287,8 @@ export default [
             y: 10.0
         },
         width: 5.0,
-        height: 45.0
+        height: 45.0,
+        type: 'coast'
     },
     {
         corner: {
@@ -264,7 +296,8 @@ export default [
             y: -10.0
         },
         width: 25.0,
-        height: 15.0
+        height: 15.0,
+        type: 'swamp'
     },
     {
         corner: {
@@ -272,7 +305,8 @@ export default [
             y: 0.0
         },
         width: 15.0,
-        height: 20.0
+        height: 20.0,
+        type: 'forest'
     },
     {
         corner: {
@@ -280,7 +314,8 @@ export default [
             y: 0.0
         },
         width: 10.0,
-        height: 25.0
+        height: 25.0,
+        type: 'plains'
     },
     {
         corner: {
@@ -288,7 +323,8 @@ export default [
             y: -5.0
         },
         width: 15.0,
-        height: 20.0
+        height: 20.0,
+        type: 'mountains'
     },
     {
         corner: {
@@ -296,7 +332,8 @@ export default [
             y: -40.0
         },
         width: 25.0,
-        height: 10.0
+        height: 10.0,
+        type: 'mountains'
     },
     {
         corner: {
@@ -304,7 +341,8 @@ export default [
             y: -20.0
         },
         width: 10.0,
-        height: 20.0
+        height: 20.0,
+        type: 'mountains'
     },
     {
         corner: {
@@ -312,7 +350,8 @@ export default [
             y: -40.0
         },
         width: 20.0,
-        height: 10.0
+        height: 10.0,
+        type: 'swamp'
     },
     {
         corner: {
@@ -320,7 +359,8 @@ export default [
             y: -40.0
         },
         width: 20.0,
-        height: 10.0
+        height: 10.0,
+        type: 'forest'
     },
 
     {
@@ -329,7 +369,8 @@ export default [
             y: -35.0
         },
         width: 20.0,
-        height: 15.0
+        height: 15.0,
+        type: 'water'
     },
     {
         corner: {
@@ -337,7 +378,8 @@ export default [
             y: -25.0
         },
         width: 20.0,
-        height: 25.0
+        height: 25.0,
+        type: 'coast'
     },
     {
         corner: {
@@ -345,7 +387,8 @@ export default [
             y: -25.0
         },
         width: 5.0,
-        height: 10.0
+        height: 10.0,
+        type: 'forest'
     },
     {
         corner: {
@@ -353,7 +396,8 @@ export default [
             y: -20.0
         },
         width: 15.0,
-        height: 15.0
+        height: 15.0,
+        type: 'mountains'
     },
     {
         corner: {
@@ -361,7 +405,8 @@ export default [
             y: -25.0
         },
         width: 10.0,
-        height: 10.0
+        height: 10.0,
+        type: 'forest'
     },
     {
         corner: {
@@ -369,7 +414,8 @@ export default [
             y: -25.0
         },
         width: 15.0,
-        height: 25.0
+        height: 25.0,
+        type: 'plains'
     },
 
     {
@@ -378,6 +424,7 @@ export default [
             y: -35.0
         },
         width: 30.0,
-        height: 15.0
+        height: 15.0,
+        type: 'swamp'
     }
 ]

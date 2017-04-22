@@ -4,6 +4,8 @@ import * as THREE from 'three';
 import ThreeOrbitControls from 'three-orbit-controls';
 import { connect } from 'react-redux';
 
+import Region from './Region';
+
 import { rotateCube } from '../actions';
 import { WORLD_HEIGHT } from '../constants';
 
@@ -11,26 +13,6 @@ const OrbitControls = ThreeOrbitControls(THREE);
 
 const position = new THREE.Vector3(0, -0.25, 0);
 const cubePosition = new THREE.Vector3(0, 0.5, 0);
-
-class RegionTile extends Component {
-    render() {
-        const { center, width, length, color } = this.props;
-
-        return (
-            <mesh
-                position={center}
-                receiveShadow={true}
-            >
-                <boxGeometry
-                    width={width}
-                    height={WORLD_HEIGHT}
-                    depth={length}
-                />
-                <meshPhongMaterial color={color}/>
-            </mesh>
-        );
-    }
-}
 
 class App extends Component {
     componentDidMount() {
@@ -53,8 +35,7 @@ class App extends Component {
                 mainCamera="camera"
                 width={width}
                 height={height}
-                clearColor={0xffffff}
-                clearAlpha={0.5}
+                clearColor={0xf0f0f0}
                 onAnimate={() => rotateCube()}
             >
                 <scene>
@@ -68,20 +49,8 @@ class App extends Component {
                         position={cameraPosition}
                         lookAt={cameraLookAt}
                     />
-                    <mesh
-                        position={cubePosition}
-                        rotation={cubeRotation}
-                        receiveShadow={true}
-                    >
-                        <boxGeometry
-                            width={1}
-                            height={1}
-                            depth={1}
-                        />
-                        <meshPhongMaterial/>
-                    </mesh>
                     {world.map((tile, index) =>
-                        <RegionTile key={index} {...tile.toObject()}/>
+                        <Region key={index} cubeRotation={cubeRotation} {...tile.toObject()}/>
                     )}
                     <ambientLight intensity={0.2}/>
                     <directionalLight
