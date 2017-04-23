@@ -12,7 +12,6 @@ import { WORLD_HEIGHT } from '../constants';
 const OrbitControls = ThreeOrbitControls(THREE);
 
 const position = new THREE.Vector3(0, -0.25, 0);
-const cubePosition = new THREE.Vector3(0, 0.5, 0);
 
 class App extends Component {
     componentDidMount() {
@@ -24,10 +23,12 @@ class App extends Component {
         const height = window.innerHeight;
 
         const {
-            cameraPosition, cameraLookAt, cubeRotation,
-            lightPosition, lightLookAt,
+            view: {
+                cameraPosition, cameraLookAt, cubeRotation,
+                lightPosition, lightLookAt
+            },
             rotateCube,
-            world
+            regions
         } = this.props;
 
         return (
@@ -36,7 +37,7 @@ class App extends Component {
                 width={width}
                 height={height}
                 clearColor={0xf0f0f0}
-                onAnimate={() => rotateCube()}
+                // onAnimate={() => rotateCube()}
             >
                 <scene>
                     <perspectiveCamera
@@ -49,8 +50,8 @@ class App extends Component {
                         position={cameraPosition}
                         lookAt={cameraLookAt}
                     />
-                    {world.map((tile, index) =>
-                        <Region key={index} cubeRotation={cubeRotation} {...tile.toObject()}/>
+                    {regions.map((tile, index) =>
+                        <Region key={index} cubeRotation={cubeRotation} {...tile}/>
                     )}
                     <ambientLight intensity={0.2}/>
                     <directionalLight
@@ -66,7 +67,10 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = state => state.toObject();
+const mapStateToProps = state => ({
+    regions: state.getIn(['world', 'regions']).toList().toJS(),
+    view: state.get('view').toObject()
+});
 
 const mapDispatchToProps = dispatch => ({
     rotateCube: () => dispatch(rotateCube())

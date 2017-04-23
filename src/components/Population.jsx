@@ -4,11 +4,11 @@ import * as THREE from 'three';
 
 export default class PopulationUnit extends Component {
     render() {
-        const { center, cubeRotation } = this.props;
+        const { center, height, cubeRotation } = this.props;
 
         return (
             <mesh
-                position={new THREE.Vector3(center.x, 1, center.z)}
+                position={new THREE.Vector3(center.x, height + 1, center.z)}
                 rotation={cubeRotation}
                 receiveShadow={true}
             >
