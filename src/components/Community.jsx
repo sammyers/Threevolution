@@ -2,31 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as THREE from 'three';
 
-export default class PopulationUnit extends Component {
+export default class Community extends Component {
     render() {
-        const { center, height, cubeRotation } = this.props;
+        const { center, height } = this.props;
 
         return (
             <mesh
                 position={new THREE.Vector3(center.x, height + 1, center.z)}
-                rotation={cubeRotation}
-                receiveShadow={true}
             >
-                <boxGeometry
-                    width={1}
-                    height={1}
-                    depth={1}
-                />
+                <sphereGeometry radius={1}/>
                 <meshPhongMaterial/>
             </mesh>
-        );
-    }
-}
-
-class Population extends Component {
-    render() {
-        return (
-            <div className="population"></div>
         );
     }
 }

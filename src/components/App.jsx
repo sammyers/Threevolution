@@ -8,6 +8,7 @@ import Region from './Region';
 
 import { rotateCube } from '../actions';
 import { WORLD_HEIGHT } from '../constants';
+import { createInitialCommunities } from '../helpers';
 
 const OrbitControls = ThreeOrbitControls(THREE);
 
@@ -16,6 +17,7 @@ const position = new THREE.Vector3(0, -0.25, 0);
 class App extends Component {
     componentDidMount() {
         this.controls = new OrbitControls(this.refs.camera);
+        createInitialCommunities();
     }
 
     render() {
@@ -73,7 +75,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    rotateCube: () => dispatch(rotateCube())
+    rotateCube: () => dispatch(rotateCube()),
+    createInitialCommunities: dispatch(createInitialCommunities())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)

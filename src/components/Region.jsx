@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as THREE from 'three';
 
-import PopulationUnit from './Population';
+import Community from './Community';
 
 import helvetikerFont from '../helvetiker_regular.typeface.json';
 
@@ -48,10 +48,11 @@ export default class Region extends Component {
         return (
             <group>
                 <RegionTile {...this.props}/>
-                {/*<PopulationUnit
+                <Community
                     center={center}
                     height={height}
-                    cubeRotation={cubeRotation}/>*/}
+                    cubeRotation={cubeRotation}
+                />
             </group>
         );
     }
