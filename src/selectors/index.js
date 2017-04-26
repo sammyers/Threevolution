@@ -4,6 +4,14 @@ export const getCommunity = (state, communityId) => state.getIn(
     ['world', 'communities', communityId]
 );
 
+const getPopulation = (state, communityId) => {
+    return getCommunity(state, communityId).get('population');
+};
+
+export const getCommunities = (state, regionId) => state.getIn(
+    ['world', 'regions', regionId, 'communities']
+).map(id => state.getIn(['world', 'communities', id]));
+
 export const getTraits = (state, communityId) => state.getIn(
     ['world', 'communities', communityId, 'traits']
 );
@@ -25,39 +33,68 @@ const getRegion = (state, regionId) => state.getIn(
     ['world', 'regions', regionId]
 );
 
-const getRegionType = (state, regionId) => state.getIn(
+export const getRegionType = (state, regionId) => state.getIn(
     ['world', 'regions', regionId, 'type']
 );
 
 const getCarryingCapacity = (state, regionId) => {
     const region = getRegion(state, regionId);
-    return region.get('width') * region.get('length') / 5;
+    return region.get('width') * region.get('length') / 25;
 };
 
-const getAdaptationScore = (state, regionId, traits) => calculateAdaptationScore(
-    traits,
-    getRegionType(state, regionId)
-);
+const getTotalPopulation = (state, regionId) => {
+    return getCommunities(state, regionId).reduce(
+        (total, community) => total += community.get('population'),
+        0
+    );
+};
+
+export const getFreeSpace = (state, regionId) => {
+    return getCarryingCapacity(state, regionId) - getTotalPopulation(state, regionId);
+};
+
+const getAdaptationScore = (state, regionId, communityId) => {
+    const fitness = calculateAdaptationScore(
+        getTraits(state, communityId),
+        getRegionType(state, regionId)
+    );
+    const freeSpace = getFreeSpace(state, regionId);
+    return fitness;// + freeSpace;
+};
 
 const getFitness = (state, communityId) => {
     const regionId = getContainingRegion(state, communityId);
-    const traits = getTraits(state, communityId);
-    return getAdaptationScore(state, regionId, traits);
+    return getAdaptationScore(state, regionId, communityId);
 };
 
-export const getBestRegion = (state, communityId) => {
-    const traits = getTraits(state, communityId);
-    const currentRegion = getContainingRegion(state, communityId);
+const getBestOtherRegion = (state, communityId) => {
     const otherRegions = getNeighboringRegions(state, communityId)
         .sortBy(() => Math.random()); //Shuffle to randomize in case of a tie
-    const currentRegionScore = getAdaptationScore(state, currentRegion, traits);
-    const otherScores = otherRegions.map(regionId => {
-        return getAdaptationScore(state, regionId, traits);
+    const scores = otherRegions.map(regionId => {
+        return getAdaptationScore(state, regionId, communityId);
     });
-    const maxScore = otherScores.max();
+    const maxScore = scores.max();
+    return [otherRegions.get(scores.indexOf(maxScore)), maxScore];
+}
+
+export const getBestRegion = (state, communityId) => {
+    const currentRegion = getContainingRegion(state, communityId);
+    const currentRegionScore = getAdaptationScore(state, currentRegion, communityId);
+    const [bestOtherRegion, maxScore] = getBestOtherRegion(state, communityId);
     if (maxScore > currentRegionScore) {
-        return otherRegions.get(otherScores.indexOf(maxScore));
+        return bestOtherRegion;
     } else {
         return currentRegion;
     }
+};
+
+export const getRenderHeight = (state, communityId) => {
+    const regionId = state.getIn(['world', 'communities', communityId, 'regionId']);
+    const communities = state.getIn(['world', 'regions', regionId, 'communities']);
+    const prevCommunities = communities.slice(0, communities.indexOf(communityId));
+    const height = prevCommunities.reduce(
+        (total, community) => total + getPopulation(state, community),
+        0
+    );
+    return height + (prevCommunities.size - 1) * 0.2;
 };

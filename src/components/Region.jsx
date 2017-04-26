@@ -28,18 +28,19 @@ class RegionTile extends Component {
 
 export default class Region extends Component {
     render() {
-        const { center, cubeRotation, height, communities: [ id ] } = this.props;
+        const { center, cubeRotation, height, communities } = this.props;
         return (
             <group>
                 <RegionTile {...this.props}/>
-                {id ?
+                {communities.map((id, index, iter) => 
                     <Community
+                        key={id}
                         id={id}
                         center={center}
-                        height={height}
+                        worldHeight={height}
                         cubeRotation={cubeRotation}
                     />
-                    : null}
+                )}
             </group>
         );
     }

@@ -2,7 +2,7 @@ import { Map, List } from 'immutable';
 import * as THREE from 'three';
 
 const initialState = Map({
-    cameraPosition: new THREE.Vector3(0, 100, 75),
+    cameraPosition: new THREE.Vector3(0, 90, 50),
     cameraLookAt: new THREE.Vector3(),
     cubeRotation: new THREE.Euler(),
     lightPosition: new THREE.Vector3(200, 500, 200),

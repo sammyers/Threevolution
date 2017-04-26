@@ -4,10 +4,12 @@ import {
     ADD_COMMUNITY, ADD_COMMUNITY_TO_REGION,
     MOVE_COMMUNITY,
     MUTATE_COMMUNITY,
-    INCREASE_POPULATION
+    CHANGE_POPULATION
 } from './actionTypes';
-import { generateMutations } from '../helpers';
-import { getContainingRegion, getBestRegion } from '../selectors';
+import { generateMutations, calculateAdaptationScore, randomColor } from '../helpers';
+import {
+    getContainingRegion, getBestRegion, getRegionType, getFreeSpace
+} from '../selectors';
 
 const mutateCommunity = (id, mutations) => ({
     type: MUTATE_COMMUNITY,
@@ -35,7 +37,7 @@ const addCommunityToRegion = (id, regionId) => ({
     regionId
 });
 
-export const addCommunity = (traits, population, regionId) => {
+export const addCommunity = (traits, population, regionId, color) => {
     const id = createUUID();
 
     return dispatch => {
@@ -44,7 +46,8 @@ export const addCommunity = (traits, population, regionId) => {
             id,
             traits,
             population,
-            regionId
+            regionId,
+            color
         });
         dispatch(addCommunityToRegion(id, regionId));
     };
@@ -70,7 +73,32 @@ export const moveCommunities = () => {
     };
 };
 
-export const increasePopulation = (communityId, increase) => ({
-    type: INCREASE_POPULATION,
-    increase
+export const changePopulation = (communityId, diff) => ({
+    type: CHANGE_POPULATION,
+    id: communityId,
+    diff
 });
+
+export const growCommunities = () => {
+    return (dispatch, getState) => {
+        const state = getState();
+        state.getIn(['world', 'communities']).forEach(
+            (community, id) => {
+                const traits = community.get('traits');
+                const region = community.get('regionId');
+                const fitness = calculateAdaptationScore(
+                    traits,
+                    getRegionType(state, region)
+                );
+                if (fitness > 3) {
+                    if (community.get('population') >= 5) {
+                        dispatch(changePopulation(id, -1));
+                        dispatch(addCommunity(traits, 2, region, randomColor()));
+                    } else if (getFreeSpace(state, region) > 0) {
+                        dispatch(changePopulation(id, 1));
+                    }
+                }
+            }
+        );
+    };
+};

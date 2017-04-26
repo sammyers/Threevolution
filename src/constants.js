@@ -1,6 +1,8 @@
 export const WORLD_HEIGHT = 0.5;
 export const MUTATION_PROBABILITY = 0.01;
 
+export const INFO_PANEL_HEIGHT = 300;
+
 export const traitTypes = {
     foraging: {
         'coast': 1,

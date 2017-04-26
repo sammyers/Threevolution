@@ -6,7 +6,8 @@ import { mapRegionToTile } from '../helpers';
 import {
     ADD_COMMUNITY, ADD_COMMUNITY_TO_REGION,
     MOVE_COMMUNITY,
-    MUTATE_COMMUNITY
+    MUTATE_COMMUNITY,
+    CHANGE_POPULATION
 } from '../actions/actionTypes';
 
 const initialRegionState = Map({
@@ -35,7 +36,8 @@ const worldReducer = (state = initialState, action) => {
                 Map({
                     traits: action.traits,
                     population: action.population,
-                    regionId: action.regionId
+                    regionId: action.regionId,
+                    color: action.color
                 })
             );
         case ADD_COMMUNITY_TO_REGION:
@@ -71,6 +73,12 @@ const worldReducer = (state = initialState, action) => {
             ).setIn(
                 ['communities', action.id, 'regionId'],
                 action.regionId
+            );
+
+        case CHANGE_POPULATION:
+            return state.updateIn(
+                ['communities', action.id, 'population'],
+                pop => pop + action.diff
             );
 
         default:

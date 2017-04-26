@@ -22,10 +22,12 @@ const initialTraits = Map({
 export const createInitialCommunities = () => {
     return dispatch => {
         for (let regionId of waterRegions) {
-            dispatch(addCommunity(initialTraits, 2, regionId))
+            dispatch(addCommunity(initialTraits, 2, regionId, randomColor()))
         }
     };
 };
+
+export const randomColor = () => Math.floor(Math.random() * 0xffffff);
 
 export const mapRegionToTile = region => {
     const { corner: { x, y }, width, length, type, id, borders } = region;

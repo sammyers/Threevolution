@@ -8,8 +8,11 @@ import PropTypes from 'prop-types';
 import Scene from './Scene';
 import Region from './Region';
 
-import { rotateCube, processMutations, moveCommunities } from '../actions';
-import { WORLD_HEIGHT } from '../constants';
+import {
+    rotateCube,
+    processMutations, moveCommunities, growCommunities
+} from '../actions';
+import { WORLD_HEIGHT, INFO_PANEL_HEIGHT } from '../constants';
 import { createInitialCommunities } from '../helpers';
 
 const OrbitControls = ThreeOrbitControls(THREE);
@@ -21,14 +24,16 @@ class App extends Component {
         this.controls = new OrbitControls(this.refs.camera);
         const {
             communities,
-            initializeCommunities, processMutations, moveCommunities
+            initializeCommunities,
+            processMutations, growCommunities, moveCommunities
         } = this.props;
         initializeCommunities();
 
         this.mutate = setInterval(() => {
             processMutations();
+            growCommunities();
             moveCommunities();
-        }, 100);
+        }, 500);
     }
 
     componentWillUnmount() {
@@ -37,7 +42,7 @@ class App extends Component {
 
     render() {
         const width = window.innerWidth;
-        const height = window.innerHeight;
+        const height = window.innerHeight - INFO_PANEL_HEIGHT;
 
         const {
             view: {
@@ -49,37 +54,41 @@ class App extends Component {
         } = this.props;
 
         return (
-            <React3
-                mainCamera="camera"
-                width={width}
-                height={height}
-                clearColor={0xf0f0f0}
-                // onAnimate={() => rotateCube()}
-            >
-                <Scene store={this.context.store}>
-                    <perspectiveCamera
-                        name="camera"
-                        ref="camera"
-                        fov={75}
-                        aspect={width / height}
-                        near={0.1}
-                        far={1000}
-                        position={cameraPosition}
-                        lookAt={cameraLookAt}
-                    />
-                    {regions.map((tile, index) =>
-                        <Region key={index} cubeRotation={cubeRotation} {...tile}/>
-                    )}
-                    <ambientLight intensity={0.2}/>
-                    <directionalLight
-                        color={0xffffff}
-                        position={lightPosition}
-                        lookAt={lightLookAt}
-                        intensity={1.0}
-                        castShadow={true}
-                    />
-                </Scene>
-            </React3>
+            <div className="app">
+                <React3
+                    mainCamera="camera"
+                    width={width}
+                    height={height}
+                    clearColor={0xf0f0f0}
+                    // onAnimate={() => rotateCube()}
+                >
+                    <Scene store={this.context.store}>
+                        <perspectiveCamera
+                            name="camera"
+                            ref="camera"
+                            fov={75}
+                            aspect={width / height}
+                            near={0.1}
+                            far={1000}
+                            position={cameraPosition}
+                            lookAt={cameraLookAt}
+                        />
+                        {regions.map((tile, index) =>
+                            <Region key={index} cubeRotation={cubeRotation} {...tile}/>
+                        )}
+                        <ambientLight intensity={0.2}/>
+                        <directionalLight
+                            color={0xffffff}
+                            position={lightPosition}
+                            lookAt={lightLookAt}
+                            intensity={1.0}
+                            castShadow={true}
+                        />
+                    </Scene>
+                </React3>
+                <div className="info" style={{ height: INFO_PANEL_HEIGHT }}>
+                </div>
+            </div>
         );
     }
 }
@@ -98,6 +107,7 @@ const mapDispatchToProps = dispatch => ({
     rotateCube: () => dispatch(rotateCube()),
     initializeCommunities: () => dispatch(createInitialCommunities()),
     processMutations: () => dispatch(processMutations()),
+    growCommunities: () => dispatch(growCommunities()),
     moveCommunities: () => dispatch(moveCommunities())
 });
 
