@@ -65,3 +65,8 @@ export const generateMutations = traits => {
     }
     return newTraits;
 };
+
+export const calculateAdaptationScore = (traits, regionType) => traits.reduce(
+    (score, level, trait) => score += traitTypes[trait][regionType] * level,
+    0
+);

@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import Scene from './Scene';
 import Region from './Region';
 
-import { rotateCube, processMutations } from '../actions';
+import { rotateCube, processMutations, moveCommunities } from '../actions';
 import { WORLD_HEIGHT } from '../constants';
 import { createInitialCommunities } from '../helpers';
 
@@ -21,11 +21,14 @@ class App extends Component {
         this.controls = new OrbitControls(this.refs.camera);
         const {
             communities,
-            initializeCommunities, processMutations
+            initializeCommunities, processMutations, moveCommunities
         } = this.props;
         initializeCommunities();
 
-        this.mutate = setInterval(() => processMutations(), 1000);
+        this.mutate = setInterval(() => {
+            processMutations();
+            moveCommunities();
+        }, 100);
     }
 
     componentWillUnmount() {
@@ -94,7 +97,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     rotateCube: () => dispatch(rotateCube()),
     initializeCommunities: () => dispatch(createInitialCommunities()),
-    processMutations: () => dispatch(processMutations())
+    processMutations: () => dispatch(processMutations()),
+    moveCommunities: () => dispatch(moveCommunities())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)

@@ -5,6 +5,7 @@ import worldMap from '../map';
 import { mapRegionToTile } from '../helpers';
 import {
     ADD_COMMUNITY, ADD_COMMUNITY_TO_REGION,
+    MOVE_COMMUNITY,
     MUTATE_COMMUNITY
 } from '../actions/actionTypes';
 
@@ -33,7 +34,8 @@ const worldReducer = (state = initialState, action) => {
                 ['communities', action.id],
                 Map({
                     traits: action.traits,
-                    population: action.population
+                    population: action.population,
+                    regionId: action.regionId
                 })
             );
         case ADD_COMMUNITY_TO_REGION:
@@ -49,10 +51,28 @@ const worldReducer = (state = initialState, action) => {
                     if (mutation == -1 && traits.get(trait) == 1) {
                         return all.delete(trait);
                     } else {
-                        return all.update(trait, 0, val => val + mutation);
+                        return all.update(
+                            trait,
+                            0, 
+                            val => val + mutation > 6 ? 6 : val + mutation
+                        );
                     }
                 }, traits)
             );
+
+        case MOVE_COMMUNITY:
+            let oldRegionId = state.getIn(['communities', action.id, 'regionId']);
+            return state.updateIn(
+                ['regions', oldRegionId, 'communities'],
+                communities => communities.delete(communities.indexOf(action.id))
+            ).updateIn(
+                ['regions', action.regionId, 'communities'],
+                communities => communities.push(action.id)
+            ).setIn(
+                ['communities', action.id, 'regionId'],
+                action.regionId
+            );
+
         default:
             return state;
     }

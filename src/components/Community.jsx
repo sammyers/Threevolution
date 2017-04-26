@@ -19,7 +19,9 @@ class Community extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => getCommunity(state, ownProps.id);
+const mapStateToProps = (state, ownProps) => {
+    return getCommunity(state, ownProps.id).toObject();
+};
 
 export default connect(mapStateToProps)
 (Community)
