@@ -4,10 +4,6 @@ import * as THREE from 'three';
 
 import Community from './Community';
 
-import helvetikerFont from '../helvetiker_regular.typeface.json';
-
-let font = new THREE.Font(helvetikerFont);
-
 class RegionTile extends Component {
     render() {
         const { center, width, length, height, color, id } = this.props;
@@ -25,18 +21,6 @@ class RegionTile extends Component {
                     />
                     <meshPhongMaterial color={color}/>
                 </mesh>
-                {/*<mesh
-                    position={new THREE.Vector3(center.x - 1, height, center.z)}
-                >
-                    <textGeometry
-                        text={id.toString()}
-                        size={2}
-                        font={font}
-                        height={1}
-                    >
-                    </textGeometry>
-                    <meshPhongMaterial/>
-                </mesh>*/}
             </group>
         );
     }
@@ -44,15 +28,18 @@ class RegionTile extends Component {
 
 export default class Region extends Component {
     render() {
-        const { center, cubeRotation, height } = this.props;
+        const { center, cubeRotation, height, communities: [ id ] } = this.props;
         return (
             <group>
                 <RegionTile {...this.props}/>
-                <Community
-                    center={center}
-                    height={height}
-                    cubeRotation={cubeRotation}
-                />
+                {id ?
+                    <Community
+                        id={id}
+                        center={center}
+                        height={height}
+                        cubeRotation={cubeRotation}
+                    />
+                    : null}
             </group>
         );
     }

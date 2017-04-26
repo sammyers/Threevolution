@@ -22,7 +22,7 @@ const initialTraits = Map({
 export const createInitialCommunities = () => {
     return dispatch => {
         for (let regionId of waterRegions) {
-            dispatch(addCommunity(initialTraits, 1, regionId))
+            dispatch(addCommunity(initialTraits, 2, regionId))
         }
     };
 };
@@ -61,7 +61,7 @@ export const generateMutations = traits => {
         }
     }, Map())
     if (Math.random() < MUTATION_PROBABILITY) {
-        return traits.set(randomChoice(Object.keys(traitTypes)), 1);
+        return newTraits.set(randomChoice(Object.keys(traitTypes)), 1);
     }
-    return traits;
+    return newTraits;
 };

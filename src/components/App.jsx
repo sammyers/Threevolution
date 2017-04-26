@@ -3,10 +3,12 @@ import React3 from 'react-three-renderer';
 import * as THREE from 'three';
 import ThreeOrbitControls from 'three-orbit-controls';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
+import Scene from './Scene';
 import Region from './Region';
 
-import { rotateCube } from '../actions';
+import { rotateCube, processMutations } from '../actions';
 import { WORLD_HEIGHT } from '../constants';
 import { createInitialCommunities } from '../helpers';
 
@@ -17,7 +19,17 @@ const position = new THREE.Vector3(0, -0.25, 0);
 class App extends Component {
     componentDidMount() {
         this.controls = new OrbitControls(this.refs.camera);
-        createInitialCommunities();
+        const {
+            communities,
+            initializeCommunities, processMutations
+        } = this.props;
+        initializeCommunities();
+
+        this.mutate = setInterval(() => processMutations(), 1000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.mutate);
     }
 
     render() {
@@ -41,7 +53,7 @@ class App extends Component {
                 clearColor={0xf0f0f0}
                 // onAnimate={() => rotateCube()}
             >
-                <scene>
+                <Scene store={this.context.store}>
                     <perspectiveCamera
                         name="camera"
                         ref="camera"
@@ -63,20 +75,26 @@ class App extends Component {
                         intensity={1.0}
                         castShadow={true}
                     />
-                </scene>
+                </Scene>
             </React3>
         );
     }
 }
 
+App.contextTypes = {
+    store: PropTypes.object.isRequired
+};
+
 const mapStateToProps = state => ({
     regions: state.getIn(['world', 'regions']).toList().toJS(),
+    communities: state.getIn(['world', 'communities']),
     view: state.get('view').toObject()
 });
 
 const mapDispatchToProps = dispatch => ({
     rotateCube: () => dispatch(rotateCube()),
-    createInitialCommunities: dispatch(createInitialCommunities())
+    initializeCommunities: () => dispatch(createInitialCommunities()),
+    processMutations: () => dispatch(processMutations())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)

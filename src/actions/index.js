@@ -4,11 +4,27 @@ import {
     MUTATE_COMMUNITY,
     ADD_COMMUNITY, ADD_COMMUNITY_TO_REGION
 } from './actionTypes';
+import { generateMutations } from '../helpers';
 
-export const mutateCommunity = (id, mutations) => ({
+const mutateCommunity = (id, mutations) => ({
     type: MUTATE_COMMUNITY,
+    id,
     mutations
 });
+
+export const processMutations = () => {
+    return (dispatch, getState) => {
+        getState().getIn(['world', 'communities']).forEach(
+            (community, id) => {
+                const traits = community.get('traits');
+                const mutations = generateMutations(traits);
+                if (mutations.some(val => val != 0)) {
+                    dispatch(mutateCommunity(id, mutations));
+                }
+            }
+        );
+    };
+};
 
 const addCommunityToRegion = (id, regionId) => ({
     type: ADD_COMMUNITY_TO_REGION,

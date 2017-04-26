@@ -4,7 +4,8 @@ import { combineReducers } from 'redux-immutable';
 import worldMap from '../map';
 import { mapRegionToTile } from '../helpers';
 import {
-    ADD_COMMUNITY, ADD_COMMUNITY_TO_REGION
+    ADD_COMMUNITY, ADD_COMMUNITY_TO_REGION,
+    MUTATE_COMMUNITY
 } from '../actions/actionTypes';
 
 const initialRegionState = Map({
@@ -39,6 +40,18 @@ const worldReducer = (state = initialState, action) => {
             return state.updateIn(
                 ['regions', action.regionId, 'communities'],
                 communities => communities.push(action.id)
+            );
+
+        case MUTATE_COMMUNITY:
+            return state.updateIn(
+                ['communities', action.id, 'traits'],
+                traits => action.mutations.reduce((all, mutation, trait) => {
+                    if (mutation == -1 && traits.get(trait) == 1) {
+                        return all.delete(trait);
+                    } else {
+                        return all.update(trait, 0, val => val + mutation);
+                    }
+                }, traits)
             );
         default:
             return state;

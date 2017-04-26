@@ -2,24 +2,24 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as THREE from 'three';
 
-export default class Community extends Component {
+import { getCommunity } from '../selectors';
+
+class Community extends Component {
     render() {
-        const { center, height } = this.props;
+        const { center, height, population } = this.props;
 
         return (
             <mesh
-                position={new THREE.Vector3(center.x, height + 1, center.z)}
+                position={new THREE.Vector3(center.x, height + population, center.z)}
             >
-                <sphereGeometry radius={1}/>
+                <sphereGeometry radius={population}/>
                 <meshPhongMaterial/>
             </mesh>
         );
     }
 }
 
-// const mapStateToProps = state => ({
-//     cubeRotation: state.get('cubeRotation')
-// });
+const mapStateToProps = (state, ownProps) => getCommunity(state, ownProps.id);
 
-// export default connect(mapStateToProps)
-// (PopulationUnit)
+export default connect(mapStateToProps)
+(Community)
