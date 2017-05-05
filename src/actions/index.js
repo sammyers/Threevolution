@@ -67,6 +67,7 @@ export const moveCommunities = () => {
                 const bestRegion = getBestRegion(state, id);
                 if (bestRegion != getContainingRegion(state, id)) {
                     dispatch(moveCommunity(id, bestRegion));
+                    // dispatch(changePopulation(id, -1));
                 }
             }
         );

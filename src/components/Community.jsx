@@ -10,7 +10,7 @@ class Community extends Component {
 
         return (
             <mesh
-                position={new THREE.Vector3(center.x, renderHeight + population, center.z)}
+                position={new THREE.Vector3(center.x, renderHeight + population / 2, center.z)}
             >
                 <sphereGeometry radius={population / 2}/>
                 <meshPhongMaterial color={color}/>
