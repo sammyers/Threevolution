@@ -1,3 +1,5 @@
+import '../index.scss';
+
 import React, { Component } from 'react';
 import React3 from 'react-three-renderer';
 import * as THREE from 'three';
@@ -7,6 +9,7 @@ import PropTypes from 'prop-types';
 
 import Scene from './Scene';
 import Region from './Region';
+import InfoPanel from './InfoPanel';
 
 import {
     rotateCube,
@@ -86,8 +89,7 @@ class App extends Component {
                         />
                     </Scene>
                 </React3>
-                <div className="info" style={{ height: INFO_PANEL_HEIGHT }}>
-                </div>
+                <InfoPanel/>
             </div>
         );
     }

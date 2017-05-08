@@ -92,7 +92,7 @@ export const growCommunities = () => {
                     getRegionType(state, region)
                 );
                 if (fitness > 3) {
-                    if (community.get('population') >= 5) {
+                    if (community.get('population') >= 8) {
                         dispatch(changePopulation(id, -1));
                         dispatch(addCommunity(traits, 2, region, randomColor()));
                     } else if (getFreeSpace(state, region) > 0) {

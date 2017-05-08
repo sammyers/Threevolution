@@ -62,7 +62,7 @@ const getAdaptationScore = (state, regionId, communityId) => {
     return fitness;// + freeSpace;
 };
 
-const getFitness = (state, communityId) => {
+export const getFitness = (state, communityId) => {
     const regionId = getContainingRegion(state, communityId);
     return getAdaptationScore(state, regionId, communityId);
 };
